@@ -61,12 +61,24 @@ namespace UP1_Oct._
         private void button2_Click(object sender, EventArgs e)
         {
             Redact(true);
-
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            var row = (System.Data.DataRowView)DGDep.CurrentRow.DataBoundItem;
+            string name = (string)textBox1.Text;
+            string desc = (string)textBox2.Text;
+            int id = Convert.ToInt32(row["department_id"]);
+            db.EditDep(id, name, desc);
+            Redact(false);
+        }
 
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            var row = (System.Data.DataRowView)DGDep.CurrentRow.DataBoundItem;
+            int id = Convert.ToInt32(row["department_id"]);
+            db.DelDep(id);
+            UpdateUC();
         }
     }
 }

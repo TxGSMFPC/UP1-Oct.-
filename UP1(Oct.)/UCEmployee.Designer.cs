@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -46,7 +47,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.DGEmp = new System.Windows.Forms.DataGridView();
-            this.button3 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGEmp)).BeginInit();
             this.SuspendLayout();
@@ -74,6 +74,19 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(207, 435);
             this.panel1.TabIndex = 0;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.Gainsboro;
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Location = new System.Drawing.Point(3, 385);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(198, 49);
+            this.button3.TabIndex = 18;
+            this.button3.Text = "Сохранить";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // btnDel
             // 
@@ -231,25 +244,13 @@
             this.DGEmp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGEmp.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.DGEmp.Location = new System.Drawing.Point(218, 4);
+            this.DGEmp.MultiSelect = false;
             this.DGEmp.Name = "DGEmp";
             this.DGEmp.ReadOnly = true;
             this.DGEmp.RowHeadersVisible = false;
             this.DGEmp.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGEmp.Size = new System.Drawing.Size(382, 435);
             this.DGEmp.TabIndex = 1;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.Gainsboro;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(3, 385);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(198, 49);
-            this.button3.TabIndex = 18;
-            this.button3.Text = "Сохранить";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // UCEmployee
             // 

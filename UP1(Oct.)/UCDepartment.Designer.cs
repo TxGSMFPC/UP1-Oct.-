@@ -43,11 +43,18 @@
             // 
             // DGDep
             // 
+            this.DGDep.AllowUserToAddRows = false;
+            this.DGDep.AllowUserToDeleteRows = false;
             this.DGDep.BackgroundColor = System.Drawing.Color.Gainsboro;
             this.DGDep.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DGDep.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGDep.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.DGDep.Location = new System.Drawing.Point(207, 4);
+            this.DGDep.MultiSelect = false;
             this.DGDep.Name = "DGDep";
+            this.DGDep.ReadOnly = true;
+            this.DGDep.RowHeadersVisible = false;
+            this.DGDep.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGDep.Size = new System.Drawing.Size(393, 435);
             this.DGDep.TabIndex = 0;
             // 
@@ -60,6 +67,7 @@
             this.btnDel.TabIndex = 19;
             this.btnDel.Text = "🗑️";
             this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // btnUpdate
             // 

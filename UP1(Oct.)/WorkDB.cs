@@ -14,8 +14,8 @@ namespace UP1_Oct._
 {
     internal class WorkDB
     {
-        string connectionString = "Server=localhost;Port=3306;Database=company_vacations;Uid=root;Pwd=кщще;";
-
+        string connectionString = "Server=localhost;Port=3306;Database=company_vacations;Uid=root;Pwd=root;";
+        //кщще
         public DataTable GetEmp()
         {
             DataTable dt = new DataTable();
@@ -307,7 +307,7 @@ namespace UP1_Oct._
 
         public void DelDep(int id)
         {
-            string query = "DELETE FROM department WHERE id = @id";
+            string query = "DELETE FROM department WHERE department_id = @id";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
@@ -339,7 +339,7 @@ namespace UP1_Oct._
 
         public void EditDep(int id, string name, string desc)
         {
-            string query = "UPDATE department SET name = @name, description = @desc WHERE department id = @id";
+            string query = "UPDATE department SET name = @name, description = @desc WHERE department_id = @id";
             using (MySqlConnection connection = new MySqlConnection(this.connectionString))
             {
                 using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -348,7 +348,7 @@ namespace UP1_Oct._
                     command.Parameters.AddWithValue("@id", id);
 
 
-                    command.Parameters.AddWithValue("@fname", name);
+                    command.Parameters.AddWithValue("@name", name);
                     command.Parameters.AddWithValue("@desc", desc);
 
                     try
@@ -371,6 +371,96 @@ namespace UP1_Oct._
                     }
                 }
             }
+        }
+
+        public void AddVacation(int employeeId, DateTime startDate, DateTime endDate, string vacationType, string status)
+        {
+
+            string query = "INSERT INTO vacation (employee_id, start_date, end_date, vacation_type, status, created_at) " +
+                           "VALUES (@employeeId, @startDate, @endDate, @vacationType, @status, NOW())";
+
+            using (MySqlConnection connection = new MySqlConnection(this.connectionString))
+            {
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+
+                    command.Parameters.AddWithValue("@employeeId", employeeId);
+                    command.Parameters.AddWithValue("@startDate", startDate.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@endDate", endDate.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@vacationType", vacationType);
+                    command.Parameters.AddWithValue("@status", status);
+
+                    try
+                    {
+                        connection.Open();
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Отпуск успешно добавлен.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Ошибка при добавлении отпуска в БД: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void DelVac(int id)
+        {
+            string query = "DELETE FROM vacation WHERE vacation_id = @id";
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", id);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Запись об отпуске успешно удалена.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Запись об отпуске с таким ID не найдена в базе данных.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при удалении записи об отпуске: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private DataTable GetVac()
+        {
+            DataTable dt = new DataTable();
+            string query = "SELECT * FROM vacantion";
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, connection))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при получении списка отпусков: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            return dt;
         }
     }
 }

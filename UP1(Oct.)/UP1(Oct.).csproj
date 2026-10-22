@@ -124,6 +124,12 @@
     <Compile Include="UCEmployee.Designer.cs">
       <DependentUpon>UCEmployee.cs</DependentUpon>
     </Compile>
+    <Compile Include="UCVac.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCVac.Designer.cs">
+      <DependentUpon>UCVac.cs</DependentUpon>
+    </Compile>
     <Compile Include="WorkDB.cs" />
     <EmbeddedResource Include="FormAuth.resx">
       <DependentUpon>FormAuth.cs</DependentUpon>
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UCEmployee.resx">
       <DependentUpon>UCEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCVac.resx">
+      <DependentUpon>UCVac.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
