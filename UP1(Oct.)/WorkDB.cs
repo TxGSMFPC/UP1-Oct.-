@@ -42,7 +42,7 @@ namespace UP1_Oct._
         public DataTable GetFullEmp()
         {
             DataTable dt = new DataTable();
-            string query = "SELECT * FROM employee";
+            string query = "SELECT employee_id, first_name, last_name, middle_name, email, phone, hire_date, department_id, status, CONCAT(first_name, ' ', last_name, ' ', middle_name, ' ') AS full_name FROM employee";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
@@ -408,7 +408,43 @@ namespace UP1_Oct._
             }
         }
 
-        private void DelVac(int id)
+        public DataTable GetVacationsWithDepartments()
+        {
+            DataTable dataTable = new DataTable();
+            string query = @"
+        SELECT 
+            v.employee_id,
+            CONCAT(e.last_name, ' ', e.first_name) AS employee_name,
+            e.department_id,
+            d.name AS department_name,
+            v.start_date,
+            v.end_date
+        FROM vacation v
+        INNER JOIN employee e ON v.employee_id = e.employee_id
+        INNER JOIN department d ON e.department_id = d.department_id";
+
+            using (MySqlConnection connection = new MySqlConnection(this.connectionString))
+            {
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(command))
+                        {
+                            adapter.Fill(dataTable);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Ошибка при получении аналитики отпусков: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            return dataTable;
+        }
+
+        public void DelVac(int id)
         {
             string query = "DELETE FROM vacation WHERE vacation_id = @id";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -440,10 +476,46 @@ namespace UP1_Oct._
             }
         }
 
-        private DataTable GetVac()
+        public void EditVac(int id, int employee_id, DateTime start, DateTime end, string type, string status)
+        {
+            string query = "UPDATE vacation SET employee_id = @employee_id, start_date = @start, end_date = @end, vacation_type = @type, status = @status WHERE vacation_id = @id";
+
+            using (MySqlConnection connection = new MySqlConnection(this.connectionString))
+            {
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@employee_id", employee_id);
+                    command.Parameters.AddWithValue("@start", start.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@end", end.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@type", type);
+                    command.Parameters.AddWithValue("@status", status);
+
+                    try
+                    {
+                        connection.Open();
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Данные отпуска успешно обновлены.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Отпуск для обновления не найден.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Ошибка при обновлении отпуска в БД: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+        public DataTable GetFullVac()
         {
             DataTable dt = new DataTable();
-            string query = "SELECT * FROM vacantion";
+            string query = "SELECT * FROM vacation";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
@@ -462,5 +534,6 @@ namespace UP1_Oct._
             }
             return dt;
         }
+
     }
 }
