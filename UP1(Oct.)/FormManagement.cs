@@ -37,5 +37,10 @@ namespace UP1_Oct._
             panel1.Controls.Clear();
             panel1.Controls.Add(ucvac);
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

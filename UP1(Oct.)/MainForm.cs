@@ -18,6 +18,9 @@ namespace UP1_Oct._
         {
             InitializeComponent();
             MainGrid.DataSource = db.GetVacations();
+            comboBox1.DataSource = new[] { new { type = "Оплачиваемый" }, new { type = "Неоплачиваемый" } };
+            comboBox1.ValueMember = "type";
+            comboBox1.DisplayMember = "type";
         }
 
         private void btnAuth_Click(object sender, EventArgs e)
@@ -91,6 +94,16 @@ namespace UP1_Oct._
             {
                 MessageBox.Show("Отлично! Накладных расходов не обнаружено. Сотрудники из одного отдела не отдыхают одновременно.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            MainGrid.DataSource = db.GetVacations();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MainGrid.DataSource = db.SortMain(comboBox1.SelectedValue.ToString());
         }
     }
 }

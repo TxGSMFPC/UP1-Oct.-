@@ -84,5 +84,10 @@ namespace UP1_Oct._
             int id = Convert.ToInt32(row["vacation_id"]);
             db.DelVac(id);
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

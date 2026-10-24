@@ -535,5 +535,45 @@ namespace UP1_Oct._
             return dt;
         }
 
+        public DataTable SortMain(string type)
+        {
+            DataTable dt = new DataTable();
+
+            string query = @"SELECT 
+                        CONCAT(e.last_name, ' ', e.first_name, ' ', IFNULL(e.middle_name, '')) AS 'Сотрудник',
+                        d.name AS 'Отдел',
+                        CONCAT(DATE_FORMAT(v.start_date, '%d.%m.%Y'), ' - ', DATE_FORMAT(v.end_date, '%d.%m.%Y')) AS 'Период отпуска',
+                        v.vacation_type AS 'Тип отпуска',
+                        v.status AS 'Статус',
+                        DATE_FORMAT(v.created_at, '%d.%m.%Y %H:%i') AS 'Дата создания'
+                     FROM vacation v 
+                     INNER JOIN employee e ON v.employee_id = e.employee_id 
+                     INNER JOIN department d ON e.department_id = d.department_id
+                     WHERE v.vacation_type = @type;";
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@type", type);
+
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(command))
+                        {
+                            adapter.Fill(dt);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при получении отпусков: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            return dt;
+        }
+
     }
 }
