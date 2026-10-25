@@ -322,17 +322,17 @@ namespace UP1_Oct._
 
                         if (rowsAffected > 0)
                         {
-                            MessageBox.Show("Сотрудник успешно удален.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Специальность успешно удалена.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            MessageBox.Show("Сотрудник с таким ID не найден в базе данных.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Специальность с таким ID не найдена в базе данных.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Ошибка при удалении сотрудника: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ошибка при удалении специальности: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

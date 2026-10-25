@@ -35,6 +35,11 @@ namespace UP1_Oct._
                 }
                 this.Close();
             }
+            else
+            {
+                MessageBox.Show("Попробуйте снова", "Неверный логин или пароль");
+                txtPW.Clear();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

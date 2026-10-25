@@ -17,6 +17,7 @@ namespace UP1_Oct._
         {
             InitializeComponent();
             DGDep.DataSource = db.GetDeps();
+            button3.Visible = false;
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
